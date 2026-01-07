@@ -1,11 +1,11 @@
 import './App.css'
-import RegistrationFrom from './components/RegistrationFrom'
+import RegistrationForm from './components/RegistrationForm'
 
 function App() {
 
   return (
     <>
-      <RegistrationFrom />      
+      <RegistrationForm />      
     </>
   )
 }
