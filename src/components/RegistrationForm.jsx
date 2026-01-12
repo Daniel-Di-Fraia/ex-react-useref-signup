@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function RegistrationFrom() {
 
-    const [name, setName] = useState('');
+    //test per render poagina
+    console.log('render');
+
+    const nameRef = useRef();
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
-    const [spec, setSpec] = useState('');
-    const [experience, setExperience] = useState(0);
+    const specRef = useRef();
+    const experienceRef = useRef();
     const [description, setDescription] = useState('');
 
     const letters = "abcdefghijklmnopqrstuvwxyz";
@@ -38,18 +41,24 @@ function RegistrationFrom() {
         let dati = {};
         e.preventDefault();
 
-        if (experience > 0 && spec !== '' && isUsernameValid() && isPasswordValid() && isDescriptionValid()) {
-            dati = { name, userName, password, spec, experience, description };
+        if (experienceRef.current.value > 0 && specRef.current.value !== '' && isUsernameValid() && isPasswordValid() && isDescriptionValid()) {
+            dati = 
+            `name: ${nameRef.current.value},
+             username: ${userName}, 
+             password: ${password}, 
+             spec: ${specRef.current.value}, 
+             experience: ${experienceRef.current.value}, 
+             descrizione: ${description}.`
             console.log(dati);
         } else {
             alert("inserisci anni esperienza e/o spec corretti")
         }
 
-        setName('');
+        nameRef.current.value = '';
         setUserName('');
         setPassword('');
-        setSpec('');
-        setExperience(0);
+        specRef.current.value = '';
+        experienceRef.current.value = 0;
         setDescription('');
 
     };
@@ -61,9 +70,8 @@ function RegistrationFrom() {
                 <label>Nome</label>
                 <input
                     placeholder="inserisci nome"
-                    value={name}
+                    ref={nameRef}
                     type="text"
-                    onChange={(e) => setName(e.target.value)}
                     required
                 />
                 <label>Username</label>
@@ -93,7 +101,7 @@ function RegistrationFrom() {
                     </span>
                 )}
                 <label>Specializzazione</label>
-                <select value={spec} onChange={(e) => setSpec(e.target.value)}>
+                <select ref={specRef}>
                     <option value="">-- Seleziona --</option>
                     <option value="Full Stack">Full Stack</option>
                     <option value="Frontend">Frontend</option>
@@ -102,9 +110,8 @@ function RegistrationFrom() {
                 <label>Anni di esperienza</label>
                 <input
                     placeholder="inserisci anni di esperienza"
-                    value={experience}
+                    ref={experienceRef}
                     type="number"
-                    onChange={(e) => setExperience(e.target.value)}
                     required
                 />
                 <label>Descrizione</label>
